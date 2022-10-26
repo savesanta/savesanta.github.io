@@ -17,7 +17,49 @@
             text-align: center;
             font-size: 80px;
         }
-        </style>
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 20%;
+        }
+
+        /* Three image containers (use 25% for four, and 50% for two, etc) */
+        .column {
+           float: left;
+           width: 33.33%;
+           padding: 5px;
+        }
+
+        /* Clear floats after image containers */
+        .row::after {
+           content: "";
+           clear: both;
+           display: table;
+        }
+
+        .row {
+           display: flex;
+        }
+
+        .column {
+           flex: 33.33%;
+           padding: 5px;
+        }
+
+        *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body{
+          width: 100%;
+          height: 100vh;
+        }
+
+    </style>
 
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,7 +74,74 @@ p {
 
 <body bgcolor="red">
 
+<canvas id="cnv"> </canvas>
+
+<script type="text/javascript">
+  //Tutorial from: https://www.youtube.com/watch?v=x93OHquM5Qg
+  const cnv = document.getElementById("cnv");
+  const ctx = cnv.getContext("2d");
+  cnv.width = window.innerWidth;
+ // cnv.height = window.innerHeight;
+  cnv.height = 200
+
+  class Drop{
+    constructor(){
+      this.x = Math.random() * cnv.width;
+      this.y = Math.random() * cnv.height;
+      this.r = Math.random() * 3.5;
+      this.v = Math.random() * 1.5;
+    }
+
+    make(){
+      ctx.fillStyle = "#fff";
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.closePath();
+
+      this.y += this.v;
+      if(this.y > cnv.height){
+        this.x = Math.random() * cnv.width;
+        this.y = 0;
+      }
+    }
+  }
+
+  let drops = [];
+  for (let i=0; i<1000; i++) drops.push(new Drop());
+
+  function anm(){
+    ctx.fillStyle = "rgba(255,0,0,0.5)"; //matches HTML red background
+    // Burgundy background: ctx.fillStyle = "rgba(100,0,0,0.5)";
+    ctx.fillRect(0,0,cnv.width,cnv.height);
+
+//everything here
+  //  ctx.font = "30px Arial";
+  //  ctx.strokeText("Text", 50, 50);
+//
+
+    drops.forEach(drop => drop.make());
+    requestAnimationFrame(anm);
+  }
+
+  anm();
+</script>
+
 <title>Save Santa</title>
+
+<p></p>
+
+<div class="row">
+  <div class="column">
+    <img src="Images/Santa.png" alt="Santa" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="Images/Present.png" alt="Present" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="Images/Ornament.png" alt="Ornament" style="width:100%">
+  </div>
+</div>
 
 <p></p>
 
@@ -75,7 +184,11 @@ var x = setInterval(function() {
 }, 1000);
 </script>
 
-<p>Total Number of Collected Gifts: <var>0</var></p>   <!-- Will need to update this daily!-->
+<img src="Images/Gingerbread-Man.png" width="75" height="200" class="center">
+
+<p></p>
+
+<p>Total Number of Collected Gifts: <var>574</var></p>   <!-- Will need to update this daily!-->
 
 
 
@@ -90,8 +203,8 @@ var x = setInterval(function() {
 
 <script>
 
-var currentTotalGiftsCollected = 24; //Will need to update this daily!
-var goalTotalGiftsCollected = 500; //This is the project goal (500 gifts)
+var currentTotalGiftsCollected = 574; //Will need to update this daily!
+var goalTotalGiftsCollected = 10000; //This is the project goal (10,000 gifts)
 var target = (currentTotalGiftsCollected/goalTotalGiftsCollected) * 100;
 
 var i = 0;
@@ -113,6 +226,18 @@ function move() {
   }
 }
 </script>
+
+<div class="row">
+  <div class="column">
+    <img src="Images/Snowflake.png" alt="Santa" style="width:90%">
+  </div>
+  <div class="column">
+    <img src="Images/Reindeer.png" alt="Present" style="width:70%">
+  </div>
+  <div class="column">
+    <img src="Images/Christmas-Tree.png" alt="Christmas Tree" style="width:70%">
+  </div>
+</div>
 
 </body>
 </html>
